@@ -7,8 +7,8 @@ connection.request('POST', '/1/classes/GameScore', json.dumps({
     "cheatMode": False
 }), 
 {
-    "X-Parse-Application-Id": "FRoRKIbR7WeMxj3s3jqT4kMycSz2R5yh4l8VxJdW",
-    "X-Parse-REST-API-Key": "7VLGe5GRnVvhyKZ34Ci9dlLSnSVuJ2dYjv6qRYC5",
+    "X-Parse-Application-Id": "App id",
+    "X-Parse-REST-API-Key": "rest-api key",
     "Content-Type": "application/json"
 })
 results = json.loads(connection.getresponse().read())
