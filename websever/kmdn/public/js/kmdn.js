@@ -4,13 +4,57 @@
 function Kmdn() {}
 
 
+Kmdn.prototype.verifyObjectId = function(objectId)
+{
+    function cbk_verifyObjectId(ret)
+    {
+       console.log(ret);
+        if(ret['status'] == 0)
+        {
+            console.log(ret ['data'].id);
+        }
+    }
+    callCloud("verifyObjectId", {"objectId":objectId}, cbk_verifyObjectId);
+}
+
+Kmdn.prototype.openTrans = function()
+{
+    function cbk_openTrans(data)
+    {
+       for(var i = 0 ; i < data.length ; i++)
+        {
+            console.log(data[i].id );
+            console.log(data[i].get("user"));
+            console.log(data[i].get("good"));
+            console.log(data[i].get("point"));
+            console.log(data[i].get("store"));
+            console.log(data[i].get("state"));
+        }
+    }
+    callCloud("openTrans", {}, cbk_openTrans);
+}
+
+Kmdn.prototype.buyGoods = function(objectId, user)
+{
+    function cbk_buyGoods(ret)
+    {
+        console.log(ret);
+        if(ret['status'] == 0)
+        {
+            console.log(ret ['data'].id);
+        }
+    }
+    callCloud("buyGoods", {"objectId":objectId, "user" : user}, cbk_buyGoods);
+}
+
 Kmdn.prototype.openMovie = function()
 {
     function cbk_movie(data)
     {
-        console.log(data);
         for(var i = 0 ; i < data.length ; i++)
         {
+            console.log(data[i]);
+            console.log(data[i].id );
             console.log(data[i].get("good"));
             console.log(data[i].get("point"));
         }
