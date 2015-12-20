@@ -56,14 +56,14 @@ Kmdn.prototype.openTrans = function()
                var good = data[i].get("good");
                var store = data[i].get("store");
                var point = data[i].get("point");
+               /*
                var time = data[i].get("createdAt");
-               console.log(time);
+               */
                tb.append($("<tr>").addClass("info")
                                .append($("<td>").html(state))
                                .append($("<td>").html(good))
                                .append($("<td>").html(store))
                                .append($("<td>").html(point))
-                               .append($("<td>").html(time))
 
                         );
         }
