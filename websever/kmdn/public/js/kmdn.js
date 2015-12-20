@@ -17,18 +17,55 @@ Kmdn.prototype.verifyObjectId = function(objectId)
     callCloud("verifyObjectId", {"objectId":objectId}, cbk_verifyObjectId);
 }
 
+Kmdn.prototype.soldTrans = function()
+{
+    function cbk_soldTrans(data)
+    {
+       var tb = $("#tb_soldRecord").find("tbody");
+       for(var i = 0 ; i < data.length ; i++)
+       {
+               var state = data[i].get("state");
+               var good_id = data[i].id;
+               var good = data[i].get("good");
+               var user = data[i].get("user");
+               var point = data[i].get("point");
+               var time = data[i].get("createdAt");
+               tb.append($("<tr>").addClass("info")
+                               .append($("<td>").addClass("goodState").html(state))
+                               .append($("<td>").html(good_id))
+                               .append($("<td>").html(good))
+                               .append($("<td>").html(user))
+                               .append($("<td>").html(point))
+                               .append($("<td>").html(time))
+
+                        );
+        }
+        $(".goodState").click(verify_objectId);
+    }
+    callCloud("soldTrans", {}, cbk_soldTrans);
+}
+
 Kmdn.prototype.openTrans = function()
 {
     function cbk_openTrans(data)
     {
+       var tb = $("#tb_buyRecord").find("tbody");
        for(var i = 0 ; i < data.length ; i++)
-        {
-            console.log(data[i].id );
-            console.log(data[i].get("user"));
-            console.log(data[i].get("good"));
-            console.log(data[i].get("point"));
-            console.log(data[i].get("store"));
-            console.log(data[i].get("state"));
+       {
+               var state = data[i].get("state");
+               var good = data[i].get("good");
+               var store = data[i].get("store");
+               var point = data[i].get("point");
+               var time = data[i].get("createdAt");
+               console.log(time);
+               tb.append($("<tr>").addClass("info")
+                               .append($("<td>").html(state))
+                               .append($("<td>").html(good))
+                               .append($("<td>").html(store))
+                               .append($("<td>").html(point))
+                               .append($("<td>").html(time))
+
+                        );
         }
     }
     callCloud("openTrans", {}, cbk_openTrans);

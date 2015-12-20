@@ -21,6 +21,79 @@ function query_all(InfoName)
     return query;
 }
 
+Parse.Cloud.define("verifyObjectId", function(request, response) {
+    
+    var info = require('cloud/info.js');
+    query = query_all("TransactionInfo");
+    query.get(request.params.objectId,{
+      success: function(data) {
+        data.set("state", "complete");
+        data.save();
+        ret = {
+            "status" : 0,
+            "data" : data
+        }
+        response.success(data);
+      },
+      error: function(error) {
+        ret = { 
+            "status" : -1,
+            "msg" : "Error: " + error.code + " " + error.message
+        };
+        response.error(ret);
+      }
+    });
+});
+
+Parse.Cloud.define("soldTrans", function(request, response) {
+    
+    var info = require('cloud/info.js');
+    query = query_all("TransactionInfo");
+    info.getInfo(request,response, query)
+});
+
+Parse.Cloud.define("openTrans", function(request, response) {
+    
+    var info = require('cloud/info.js');
+    query = query_all("TransactionInfo");
+    info.getInfo(request,response, query)
+});
+
+Parse.Cloud.define("buyGoods", function(request, response) {
+    
+    var info = require('cloud/info.js');
+    query = query_all("GoodInfo");
+    var query = new Parse.Query("GoodInfo");
+    query.get(request.params.objectId,{
+      success: function(data) {
+        var TransInfo = Parse.Object.extend("TransactionInfo");
+        var trans = new TransInfo();
+        trans.set("user", request.params.user);
+        trans.set("point", data.get("point"));
+        trans.set("good", data.get("good"));
+        trans.set("store", data.get("store"));
+        trans.set("state", "processing");
+        trans.save(null, {
+          success: function(data) { 
+                ret = {
+                "status" : 0,
+                "data" : data
+            }
+            response.success(ret);
+          },
+          error: function(trans, error) {
+                ret = { 
+                "status" : -1,
+                "msg" : "Error: " + error.code + " " + error.message
+            };
+            response.error(ret);
+          } 
+        });
+        
+      },
+    });
+});
+
 Parse.Cloud.define("getGoods", function(request, response) {
     
     var info = require('cloud/info.js');
