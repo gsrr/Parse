@@ -6,12 +6,14 @@ function myFacebookLogout()
         alert("myFacebookLogout");
         Parse.User.logOut();
         $("#user_id").html("");
+        $("#kmdn_login").show();
+        $("#kmdn_logout").hide();
 
 }
 function myFacebookLogin()
 {
         alert("myFacebookLogin");
-        Parse.FacebookUtils.logIn(null, {
+        Parse.FacebookUtils.logIn("email", {
                 success: function(user) {
                         if (!user.existed()) 
                         {
@@ -22,10 +24,24 @@ function myFacebookLogin()
                                 alert("User logged in through Facebook!");
                                 console.log(Parse.User.current());
                         }
+                        if (typeof(user.get("points")) == "undefined")
+                        {
+                                user.set("points", 0);
+                        }
+                        FB.api('/me', function(me) {
+                                user.set("displayName", me.name);
+                                /*
+                                user.set("email", me.email);
+                                */
+                                user.save();
+                                console.log("/me response", me);
+                                $("#user_id").html(user.get("displayName") + " " + "(" + user.get("points") + ")");
+                        });
                         console.log(user);
                         console.log(user.id);
                         console.log(user.get("points"));
-                        $("#user_id").html(user.id + " " + user.get("points"));
+                        $("#kmdn_login").hide();
+                        $("#kmdn_logout").show();
                 },
                 error: function(user, error) {
                         alert("User cancelled the Facebook login or did not fully authorize.");

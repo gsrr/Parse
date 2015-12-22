@@ -13,6 +13,7 @@ Kmdn.prototype.verifyObjectId = function(objectId)
         {
             console.log(ret ['data'].id);
         }
+        soldTrans(); 
     }
     callCloud("verifyObjectId", {"objectId":objectId}, cbk_verifyObjectId);
 }
@@ -22,19 +23,24 @@ Kmdn.prototype.soldTrans = function()
     function cbk_soldTrans(data)
     {
        var tb = $("#tb_soldRecord").find("tbody");
+       tb.empty();
        for(var i = 0 ; i < data.length ; i++)
        {
                var state = data[i].get("state");
+               var aTag = $('<a>', {href: '#' });
+               if(state == "processing")
+               {
+                        aTag.addClass("goodState")
+               }
                var good_id = data[i].id;
                var good = data[i].get("good");
                var user = data[i].get("user");
                var point = data[i].get("point");
                var time = data[i].get("createdAt");
                tb.append($("<tr>").addClass("info")
-                               .append($("<td>").addClass("goodState").html(state))
-                               .append($("<td>").html(good_id))
-                               .append($("<td>").html(good))
+                               .append($("<td>").append(aTag.text(state).attr("id", good_id)))
                                .append($("<td>").html(user))
+                               .append($("<td>").html(good))
                                .append($("<td>").html(point))
                                .append($("<td>").html(time))
 
@@ -50,20 +56,20 @@ Kmdn.prototype.openTrans = function()
     function cbk_openTrans(data)
     {
        var tb = $("#tb_buyRecord").find("tbody");
+       tb.empty();
        for(var i = 0 ; i < data.length ; i++)
        {
                var state = data[i].get("state");
                var good = data[i].get("good");
-               var store = data[i].get("store");
+               var storeName = data[i].get("storeName");
                var point = data[i].get("point");
-               /*
                var time = data[i].get("createdAt");
-               */
                tb.append($("<tr>").addClass("info")
                                .append($("<td>").html(state))
                                .append($("<td>").html(good))
-                               .append($("<td>").html(store))
+                               .append($("<td>").html(storeName))
                                .append($("<td>").html(point))
+                               .append($("<td>").html(time))
 
                         );
         }
@@ -81,20 +87,31 @@ Kmdn.prototype.buyGoods = function(objectId, user)
             console.log(ret ['data'].id);
         }
     }
-    callCloud("buyGoods", {"objectId":objectId, "user" : user}, cbk_buyGoods);
+    callCloud("buyGoods", {"objectId":objectId}, cbk_buyGoods);
 }
 
 Kmdn.prototype.openMovie = function()
 {
     function cbk_movie(data)
     {
-        for(var i = 0 ; i < data.length ; i++)
-        {
-            console.log(data[i]);
-            console.log(data[i].id );
-            console.log(data[i].get("good"));
-            console.log(data[i].get("point"));
-        }
+            var tb = $("#tb_movieTable").find("tbody");
+            tb.empty();
+            for(var i = 0 ; i < data.length ; i++)
+            {
+                    console.log(data[i]);
+                    console.log(data[i].id );
+                    console.log(data[i].get("good"));
+                    console.log(data[i].get("point"));
+                    var id = data[i].id;
+                    var good = data[i].get("good");
+                    var point = data[i].get("point");
+                    tb.append($("<tr>").addClass("success movies").attr("id", id)
+                                    .append($("<td>").html(good))
+                                    .append($("<td>").html(point))
+
+                             );
+            }
+            $(".movies").click(buyGood);
     }
     callCloud("getGoods", {"store":"kmdn_movie"}, cbk_movie);
 }

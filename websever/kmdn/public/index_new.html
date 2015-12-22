@@ -19,8 +19,10 @@ $("#bodyInfo").append($("<div/>").addClass("row").append($("<button/>").html("te
 }
  */
 
-function showKmdn(name)
+function showKmdn(name, id)
 {
+        $(".kmdnBar").removeClass("active");
+        $("#" + id).addClass("active");
         var bars = ["infos", "stores", "buyRecord", "soldRecord"];
         for(var i = 0 ; i < bars.length ; i++)
         {
@@ -28,6 +30,7 @@ function showKmdn(name)
                 if(bars[i] == name)
                 {
                         $("#" + bars[i]).show();
+
                 }
                 else
                 {
@@ -39,28 +42,31 @@ function showKmdn(name)
 
 function kmdnInfo()
 {
-        showKmdn("infos");
+        showKmdn("infos", "kmdnInfo");
 }
 
 function kmdnStore()
 {
-        showKmdn("stores");
+        showKmdn("stores", "kmdnStore");
 }
 
 function kmdnMovies()
 {
         alert("kmdn_movies");
+        var kmdn = new Kmdn();
+        kmdn.openMovie();
 }
 
 function buyGood()
 {
-
+        alert("buyGoods");
+        var kmdn = new Kmdn();
+        kmdn.buyGoods($(this).attr("id"));
 }
 
 function buyTrans()
 {
-        showKmdn("buyRecord");
-        alert("open_trans");
+        showKmdn("buyRecord", "buyTrans");
         var kmdn = new Kmdn();
         kmdn.openTrans();
 
@@ -68,14 +74,13 @@ function buyTrans()
 function verify_objectId()
 {
         alert("verify_code");
-        //var kmdn = new Kmdn();
-        //kmdn.verifyObjectId("vYe0iL2i5F");
+        var kmdn = new Kmdn();
+        kmdn.verifyObjectId($(this).attr("id"));
 }
 
 function soldTrans()
 {
-        showKmdn("soldRecord");
-        alert("sold_trans");
+        showKmdn("soldRecord", "soldTrans");
         var kmdn = new Kmdn();
         kmdn.soldTrans();
 }
@@ -93,12 +98,24 @@ function kmdn_logout()
 }
 
 $(document).ready(function(){
+        if (Parse.User.current() != null)
+        {
+                var user = Parse.User.current();
+                $("#user_id").html(user.get("displayName") + "(" + user.get("points") + ")");
+                $("#kmdn_login").hide();
+                $("#kmdn_logout").show();
+        }
+        else
+        {
+
+                $("#kmdn_login").show();
+                $("#kmdn_logout").hide();
+        }
         $("#kmdnInfo").click(kmdnInfo);
         $("#kmdnStore").click(kmdnStore);
         $("#kmdn_movies").click(kmdnMovies);
-        $(".movies").click(buyGood);
-        $("#buy_trans").click(buyTrans);
-        $("#sold_trans").click(soldTrans);
+        $("#buyTrans").click(buyTrans);
+        $("#soldTrans").click(soldTrans);
         $("#kmdn_login").click(kmdn_login);
         $("#kmdn_logout").click(kmdn_logout);
 
@@ -118,16 +135,16 @@ $(document).ready(function(){
                                 </div>
                                 <div class="collapse navbar-collapse" id="myNavbar">
                                         <ul class="nav navbar-nav">
-                                                <li class="active"><a href="#" id="kmdnInfo">金門資訊</a></li>
-                                                <li><a href="#" id="kmdnStore">金門購物</a></li>
-                                                <li><a href="#" id="buy_trans">購買紀錄</a></li> 
-                                                <li><a href="#" id="sold_trans">售貨紀錄</a></li> 
+                                                <li class="kmdnBar active" id="kmdnInfo"><a href="#">金門資訊</a></li>
+                                                <li class="kmdnBar" id="kmdnStore"><a href="#">金門購物</a></li>
+                                                <li class="kmdnBar" id="buyTrans"><a href="#">購買紀錄</a></li> 
+                                                <li class="kmdnBar" id="soldTrans"><a href="#">售貨紀錄</a></li> 
                                         </ul>
                                         <ul class="nav navbar-nav navbar-right">
                                                 <!--                                                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
                                                 <li><a href="#" id="user_id"></a></li>
                                                 <li><a href="#" id="kmdn_login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                                                <li><a href="#" id="kmdn_logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                                                <li><a href="#" id="kmdn_logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                                         </ul>
                                 </div>
                         </div>
@@ -148,39 +165,27 @@ $(document).ready(function(){
                 </div>
                 <div class="container" id="buyRecord" style="display:none">
                         <div class="table-responsive">
-                        <table class="table" id="tb_buyRecord">
+                        <table class="table table-bordered table-hover" id="tb_buyRecord">
                                 <thead>
                                         <tr>
                                                 <th>狀態</th>
                                                 <th>購買商品</th>
                                                 <th>商家</th>
-                                                <th>點數/th>
+                                                <th>點數</th>
+                                                <th>購買時間</th>
                                         </tr>
                                 </thead>
                                 <tbody>
-                                        <tr class="success">
-                                                <td>處理中</td>
-                                                <td>John</td>
-                                        </tr>
-                                        <tr class="danger">
-                                                <td>處理中</td>
-                                                <td>Mary</td>
-                                        </tr>
-                                        <tr class="info">
-                                                <td>處理中</td>
-                                                <td>July</td>
-                                        </tr>
                                 </tbody>
                         </table>
                         </div>
                 </div>
                 <div class="container" id="soldRecord" style="display:none">
                         <div class="table-responsive">
-                        <table class="table" id="tb_soldRecord">
+                        <table class="table table-bordered table-hover" id="tb_soldRecord">
                                 <thead>
                                         <tr>
                                                 <th>狀態</th>
-                                                <th>交易代碼</th>
                                                 <th>消費者</th>
                                                 <th>購買商品</th>
                                                 <th>點數</th>
@@ -188,30 +193,6 @@ $(document).ready(function(){
                                         </tr>
                                 </thead>
                                 <tbody>
-                                        <tr class="success">
-                                                <td>處理中</td>
-                                                <td>John</td>
-                                                <td>John</td>
-                                                <td>Doe</td>
-                                                <td>160</td>
-                                                <td>john@example.com</td>
-                                        </tr>
-                                        <tr class="danger">
-                                                <td>處理中</td>
-                                                <td>John</td>
-                                                <td>John</td>
-                                                <td>Moe</td>
-                                                <td>160</td>
-                                                <td>mary@example.com</td>
-                                        </tr>
-                                        <tr class="info">
-                                                <td>處理中</td>
-                                                <td>John</td>
-                                                <td>John</td>
-                                                <td>Dooley</td>
-                                                <td>160</td>
-                                                <td>july@example.com</td>
-                                        </tr>
                                 </tbody>
                         </table>
                         </div>
@@ -250,9 +231,17 @@ $(document).ready(function(){
                                                 <h4 class="modal-title">金門獅城</h4>
                                         </div>
                                         <div class="modal-body">
-                                                <div class="list-group" id="movie_body">
-                                                        <a href="#" class="list-group-item movies">movie1</a>
-                                                        <a href="#" class="list-group-item movies">movie2</a>
+                                                <div class="table-responsive">
+                                                        <table class="table" id="tb_movieTable">
+                                                                <thead>
+                                                                        <tr>
+                                                                                <th>商品名稱</th>
+                                                                                <th>點數</th>
+                                                                        </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                </tbody>
+                                                        </table>
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
