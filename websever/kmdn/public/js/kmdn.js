@@ -136,15 +136,29 @@ Kmdn.prototype.openNews = function()
     {
         function show_news(data)
         {
+
             for(var i = 0 ; i < data.length ; i++)
             {
                 console.log(data[i].get("author"));
                 console.log(data[i].get("title"));
                 console.log(data[i].get("date"));
                 console.log(data[i].get("content"));
+                var title = data[i].get("title");
+                var content = data[i].get("content");
+
+                var panel = $("<div>", {"class":"panel panel-default"});
+                var panel_heading = $("<div>", {"class" : "panel-heading"});
+                var panel_title = $("<h4>", {"class" : "panel-title"});
+                var a_tag = $("<a>", {"data-toggle" : "collapse", "data-parent" : "#accordion", "href" : "#collapse" + i}).html(title);
+                panel_heading.append(panel_title.append(a_tag));
+
+                var panel_collapse = $("<div>", {"class" : "panel-collapse collapse"}).attr("id", "collapse" + i);
+                var panel_body = $("<div>", {"class" : "panel-body"}).html(content);
+                panel_collapse.append(panel_body);
+                panel.append(panel_heading).append(panel_collapse);
+                $("#accordion_news").append(panel);
             }
         }
-        console.log(data);
         var d = new Date();
         var date = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + "05";
         console.log(date);

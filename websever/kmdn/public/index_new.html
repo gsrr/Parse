@@ -97,9 +97,19 @@ function kmdn_logout()
         myFacebookLogout();
 }
 
+function kmdnNews()
+{
+        alert("kmdn_news");
+        var kmdn = new Kmdn();
+        kmdn.openNews();
+
+}
+
+
 $(document).ready(function(){
         if (Parse.User.current() != null)
         {
+                Parse.User.current().fetch();
                 var user = Parse.User.current();
                 $("#user_id").html(user.get("displayName") + "(" + user.get("points") + ")");
                 $("#kmdn_login").hide();
@@ -113,6 +123,7 @@ $(document).ready(function(){
         }
         $("#kmdnInfo").click(kmdnInfo);
         $("#kmdnStore").click(kmdnStore);
+        $("#kmdn_news").click(kmdnNews);
         $("#kmdn_movies").click(kmdnMovies);
         $("#buyTrans").click(buyTrans);
         $("#soldTrans").click(soldTrans);
@@ -165,36 +176,36 @@ $(document).ready(function(){
                 </div>
                 <div class="container" id="buyRecord" style="display:none">
                         <div class="table-responsive">
-                        <table class="table table-bordered table-hover" id="tb_buyRecord">
-                                <thead>
-                                        <tr>
-                                                <th>狀態</th>
-                                                <th>購買商品</th>
-                                                <th>商家</th>
-                                                <th>點數</th>
-                                                <th>購買時間</th>
-                                        </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                        </table>
+                                <table class="table table-bordered table-hover" id="tb_buyRecord">
+                                        <thead>
+                                                <tr>
+                                                        <th>狀態</th>
+                                                        <th>購買商品</th>
+                                                        <th>商家</th>
+                                                        <th>點數</th>
+                                                        <th>購買時間</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                </table>
                         </div>
                 </div>
                 <div class="container" id="soldRecord" style="display:none">
                         <div class="table-responsive">
-                        <table class="table table-bordered table-hover" id="tb_soldRecord">
-                                <thead>
-                                        <tr>
-                                                <th>狀態</th>
-                                                <th>消費者</th>
-                                                <th>購買商品</th>
-                                                <th>點數</th>
-                                                <th>購買時間</th>
-                                        </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                        </table>
+                                <table class="table table-bordered table-hover" id="tb_soldRecord">
+                                        <thead>
+                                                <tr>
+                                                        <th>狀態</th>
+                                                        <th>消費者</th>
+                                                        <th>購買商品</th>
+                                                        <th>點數</th>
+                                                        <th>購買時間</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                </table>
                         </div>
                 </div>
                 <!-- Modal -->
@@ -208,9 +219,7 @@ $(document).ready(function(){
                                                 <h4 class="modal-title">金門新聞</h4>
                                         </div>
                                         <div class="modal-body">
-                                                <div class="list-group" id="news_body">
-                                                        <a href="#" class="list-group-item">news1</a>
-                                                        <a href="#" class="list-group-item">news2</a>
+                                                <div class="panel-group" id="accordion_news">
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
