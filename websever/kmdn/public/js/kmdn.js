@@ -130,6 +130,17 @@ Kmdn.prototype.openStore = function()
     callCloud("getAllStore", {}, cbk_store);
 }
 
+Kmdn.prototype.openWeather = function()
+{
+    function cbk_weather(data)
+    {
+            console.log(data.get("title"));
+            console.log(data.get("table"));
+            $("#tb_weather").html(data.get("table"));
+    }
+    callCloud("getWeather", {}, cbk_weather);
+}
+
 Kmdn.prototype.openNews = function()
 {
     function cbk_news(data)

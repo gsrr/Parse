@@ -99,12 +99,17 @@ function kmdn_logout()
 
 function kmdnNews()
 {
-        alert("kmdn_news");
         var kmdn = new Kmdn();
         kmdn.openNews();
 
 }
 
+function kmdnWeather()
+{
+        var kmdn = new Kmdn();
+        kmdn.openWeather();
+
+}
 
 $(document).ready(function(){
         if (Parse.User.current() != null)
@@ -249,6 +254,27 @@ $(document).ready(function(){
                                         </div>
                                         <div class="modal-body">
                                                 <div class="panel-group" id="accordion_news">
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                </div>
+
+                        </div>
+                </div>
+                <!-- Modal -->
+                <div id="modal_weather" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">金門氣象</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                                <div class="table-responsive" id="tb_weather">
                                                 </div>
                                         </div>
                                         <div class="modal-footer">

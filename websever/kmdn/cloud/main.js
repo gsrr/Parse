@@ -141,6 +141,27 @@ Parse.Cloud.define("getAllStore", function(request, response) {
     });
 });
 
+Parse.Cloud.define("getWeather", function(request, response) {
+    
+    query = query_all("WeatherInfo");
+    query.first({
+      success: function(data) {
+        ret = {
+            "status" : 0,
+            "data" : data
+        }
+        response.success(data);
+      },
+      error: function(error) {
+        ret = { 
+            "status" : -1,
+            "msg" : "Error: " + error.code + " " + error.message
+        };
+        response.error(ret);
+      }
+    });
+});
+
 Parse.Cloud.define("getAllNews", function(request, response) {
     
     query = query_find("NewsInfo", "date", request.params.date);
