@@ -3,6 +3,7 @@ module.exports.test = function() {
 }
 
 module.exports.getInfo = function(request,response,query){
+    query.descending("createdAt");
     query.find({
       success: function(data) {
         ret = {

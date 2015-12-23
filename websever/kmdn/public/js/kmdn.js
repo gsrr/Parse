@@ -34,12 +34,12 @@ Kmdn.prototype.soldTrans = function()
                }
                var good_id = data[i].id;
                var good = data[i].get("good");
-               var user = data[i].get("user");
+               var userName = data[i].get("userName");
                var point = data[i].get("point");
                var time = data[i].get("createdAt");
                tb.append($("<tr>").addClass("info")
                                .append($("<td>").append(aTag.text(state).attr("id", good_id)))
-                               .append($("<td>").html(user))
+                               .append($("<td>").html(userName))
                                .append($("<td>").html(good))
                                .append($("<td>").html(point))
                                .append($("<td>").html(time))
