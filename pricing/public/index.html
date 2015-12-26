@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+                <title>Bootstrap Example</title>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="css/bootstrap.min.css">
+                <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+                <script src="js/bootstrap.min.js"></script>
+                <script src="js/parseLib.js"></script>
+                <script src="js/goods.js"></script>
+                <script type="text/javascript" src="js/fb.js"></script>
+                <script>
+function show()
+{
+        var g = new Goods();
+        g.show();        
+}
+function add()
+{
+        ;
+}
+function btn_search()
+{
+        alert("btn_search");
+}
+function add_submit_goods()
+{
+        alert("add_submit_goods");
+}
+
+function edit_submit_goods()
+{
+        alert("edit_submit_goods");
+}
+
+$("document").ready(function(){
+        $("#show").click(show);
+        $("#add").click(add);
+        $("#btn_search").click(btn_search);
+        $("#add_submit_goods").click(add_submit_goods);
+        $("#edit_submit_goods").click(edit_submit_goods);
+        show();
+});        
+                </script>
+        </head>
+        <body>
+                <nav class="navbar navbar-inverse">
+                        <div class="container-fluid">
+                                <div class="navbar-header">
+                                        <a class="navbar-brand" href="#">Pricing</a>
+                                </div>
+                                <div>
+                                        <ul class="nav navbar-nav">
+                                                <li class="active" id='show'><a href="#">顯示資料</a></li>
+                                                <li><a href="#" id="add" data-toggle="modal" data-target="#add_goodsModal">新增資料</a></li>
+
+                                        </ul>
+                                        <ul class="nav navbar-nav navbar-right">
+                                                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                                                <li>
+                                                        <form class="navbar-form" role="search">
+                                                                <div class="input-group">
+                                                                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                                                                        <div class="input-group-btn">
+                                                                                <button class="btn btn-default" id="btn_search"><i class="glyphicon glyphicon-search"></i></button>
+                                                                        </div>
+                                                                </div>
+                                                        </form>
+                                                </li>
+
+                                        </ul>
+                                </div>
+                        </div>
+                </nav>
+                <div class="table-responsive" id="tb_goods">          
+                        <table class="table">
+                                <thead>
+                                        <tr>
+                                                <th>#</th>
+                                                <th>商家</th>
+                                                <th>商品</th>
+                                                <th>價格</th>
+                                                <th>備註</th>
+                                                <th>使用者</th>
+                                                <th>更新時間</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                        </table>
+                </div>
+                <!-- Modal -->
+                <div id="add_goodsModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title" id="goods_modal_title" type="add">新增資料</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                                <form class="form-horizontal" role="form">
+                                                        <div class="form-group">
+                                                                <label class="control-label col-sm-2" for="add_store">商家:</label>
+                                                                <div class="col-sm-10">          
+                                                                        <input type="text" class="form-control" id="add_store" placeholder="輸入商家">
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="control-label col-sm-2" for="add_goods">商品:</label>
+                                                                <div class="col-sm-10">          
+                                                                        <input type="text" class="form-control" id="add_goods" placeholder="輸入商品">
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="control-label col-sm-2" for="add_price">價格:</label>
+                                                                <div class="col-sm-10">          
+                                                                        <input type="text" class="form-control" id="add_price" placeholder="輸入價格">
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="control-label col-sm-2" for="add_comment">備註:</label>
+                                                                <div class="col-sm-10">          
+                                                                        <input type="text" class="form-control" id="add_comment" placeholder="">
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="control-label col-sm-2" for="add_username">您的名字:</label>
+                                                                <div class="col-sm-10">          
+                                                                        <input type="text" class="form-control" id="add_username" placeholder="">
+                                                                </div>
+                                                        </div>
+                                                </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal" id="add_submit_goods">Submit</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                </div>
+
+                        </div>
+                </div>
+
+                <!-- Modal -->
+                <div id="edit_goodsModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                        <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title" id="goods_modal_title" type="edit">修改資料</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                                <form class="form-horizontal" role="form">
+                                                        <div class="form-group" style="display:none">
+                                                                <label class="control-label col-sm-2" for="objectId">ID:</label>
+                                                                <div class="col-sm-10">          
+                                                                        <input type="text" class="form-control" id="objectId" placeholder="">
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="control-label col-sm-2" for="store">商家:</label>
+                                                                <div class="col-sm-10">          
+                                                                        <input type="text" class="form-control" id="store" placeholder="輸入商家">
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="control-label col-sm-2" for="goods">商品:</label>
+                                                                <div class="col-sm-10">          
+                                                                        <input type="text" class="form-control" id="goods" placeholder="輸入商品">
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="control-label col-sm-2" for="price">價格:</label>
+                                                                <div class="col-sm-10">          
+                                                                        <input type="text" class="form-control" id="price" placeholder="輸入價格">
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="control-label col-sm-2" for="comment">備註:</label>
+                                                                <div class="col-sm-10">          
+                                                                        <input type="text" class="form-control" id="comment" placeholder="">
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="control-label col-sm-2" for="username">您的名字:</label>
+                                                                <div class="col-sm-10">          
+                                                                        <input type="text" class="form-control" id="username" placeholder="">
+                                                                </div>
+                                                        </div>
+                                                </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal" id="edit_submit_goods">Submit</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                </div>
+
+                        </div>
+                </div>
+
+
+        </body>
+</html>
+
