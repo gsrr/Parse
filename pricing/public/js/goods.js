@@ -1,9 +1,33 @@
 function Goods() {}
 
+
+Goods.prototype.add = function()
+{
+        function cbk_add(ret)
+        {
+                this.show();               
+        }
+
+        var paras = {
+                'store':$("#add_store").val(),
+                'goods':$("#add_goods").val(),
+                'price':$("#add_price").val(),
+                'comment':$("#add_comment").val(),
+                'username':$("#add_username").val()
+        }
+        callCloud("goods_add", paras, cbk_add);
+}
+
+
 Goods.prototype.show = function()
 {
         function cbk_show(ret)
         {
+                if(ret['status'] != 0)
+                {
+                        return;
+                }
+
                 var data = ret['data'];
                 var tb = $("#tb_goods").find("tbody");
                 tb.empty();

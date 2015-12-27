@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
         <head>
-                <title>Bootstrap Example</title>
+                <title>Pricing</title>
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -14,8 +14,8 @@
                 <script>
 function show()
 {
-        var g = new Goods();
-        g.show();        
+        var global_g = new Goods();
+        global_g.show();        
 }
 function add()
 {
@@ -27,7 +27,8 @@ function btn_search()
 }
 function add_submit_goods()
 {
-        alert("add_submit_goods");
+        var global_g = new Goods();
+        global_g.add();        
 }
 
 function edit_submit_goods()

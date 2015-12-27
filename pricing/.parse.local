@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "pricing"
+    },
+    "pricing": {
+      "applicationId": "YodojoA9JjcX2ZZwhrp4PdoBN0tGnne4EtjtZtUb"
+    }
+  }
+}
