@@ -12,22 +12,17 @@
                 <script src="js/goods.js"></script>
                 <script type="text/javascript" src="js/fb.js"></script>
                 <script>
+        var global_g = new Goods();
 function show()
 {
-        var global_g = new Goods();
         global_g.show();        
 }
 function add()
 {
         ;
 }
-function btn_search()
-{
-        alert("btn_search");
-}
 function add_submit_goods()
 {
-        var global_g = new Goods();
         global_g.add();        
 }
 
@@ -36,12 +31,17 @@ function edit_submit_goods()
         alert("edit_submit_goods");
 }
 
+function srch_func()
+{
+        global_g.search($("#srch_term").val());        
+}
+
 $("document").ready(function(){
         $("#show").click(show);
         $("#add").click(add);
-        $("#btn_search").click(btn_search);
         $("#add_submit_goods").click(add_submit_goods);
         $("#edit_submit_goods").click(edit_submit_goods);
+        $("#btn_search").click(srch_func);
         show();
 });        
                 </script>
@@ -61,14 +61,14 @@ $("document").ready(function(){
                                         <ul class="nav navbar-nav navbar-right">
                                                 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                                                 <li>
-                                                        <form class="navbar-form" role="search">
+                                                        <div class="navbar-form" role="search">
                                                                 <div class="input-group">
-                                                                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                                                                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch_term">
                                                                         <div class="input-group-btn">
                                                                                 <button class="btn btn-default" id="btn_search"><i class="glyphicon glyphicon-search"></i></button>
                                                                         </div>
                                                                 </div>
-                                                        </form>
+                                                        </div>
                                                 </li>
 
                                         </ul>

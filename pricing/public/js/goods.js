@@ -1,5 +1,26 @@
-function Goods() {}
+function Goods() {
+}
 
+Goods.prototype.search = function(query)
+{
+        var tb = $("#tb_goods").find("tbody");
+        tb.find("tr").each(function(){
+                var profile = "";
+                $(this).find("td").each(function(){
+                        profile += $(this).html();
+                        profile += " ";
+                });               
+                if(profile.indexOf(query) == -1)
+                {
+                        $(this).hide();
+                }
+                else
+                {
+                        $(this).show();
+                }
+                            
+        });
+}
 
 Goods.prototype.add = function()
 {
